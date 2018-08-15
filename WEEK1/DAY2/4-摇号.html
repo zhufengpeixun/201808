@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训</title>
+    <style>
+        span {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="licensePlate"></div>
+<button id="shakeBtn">摇号</button>
+
+<script>
+    //1.生成车牌号
+    function random(n, m) {
+        return Math.round(Math.random() * (m - n) + n);
+    }
+
+    function createPlate() {
+        var area1 = 'ABCEFGHJK',//0~8
+            area2 = 'QWERTYUIOPASDFGHJKLZXCVBNM0123456789';//0~35
+        //车牌第一部分“京X”
+        var part1 = '京' + area1[random(0, 8)];
+        //车牌第二部分“五个”
+        var part2 = '';
+        while (part2.length < 5) {
+            part2 += area2[random(0, 35)];
+        }
+        return part1 + ' ' + part2;
+    }
+
+    //2.点击摇号
+    var count = 0;
+    shakeBtn.onclick = function () {
+        //=>生成一个车牌号展示给用户
+        var result = createPlate(),
+            span = document.createElement('span');
+        span.innerHTML = result;
+        licensePlate.appendChild(span);
+
+        //=>记录摇号的次数
+        count++;
+        if (count >= 3) {
+            document.body.removeChild(shakeBtn);
+        }
+    }
+</script>
+</body>
+</html>
